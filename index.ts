@@ -3,12 +3,20 @@ import CYPHER_ENCRYPT from "./src/encrypt";
 import CYPHER_DECRYPT from "./src/decrypt";
 dotenv.config();
 
+type ImportMetaEnv = ImportMeta & {
+    env: ImportMetaEnv & {
+        [key: string]: string;
+    };
+};
+
 export const HASH =
+    (import.meta as ImportMetaEnv).env.VITE_SECURE_LOCAL_STORAGE_HASH_KEY ||
     process.env.VITE_SECURE_LOCAL_STORAGE_HASH_KEY ||
     process.env.REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY ||
     process.env.SECURE_LOCAL_STORAGE_HASH_KEY;
 
 const PREFIX =
+    (import.meta as ImportMetaEnv).env.VITE_SECURE_LOCAL_STORAGE_PREFIX ||
     process.env.VITE_SECURE_LOCAL_STORAGE_PREFIX ||
     process.env.REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY ||
     process.env.SECURE_LOCAL_STORAGE_HASH_KEY ||
